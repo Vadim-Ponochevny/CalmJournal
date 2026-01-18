@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">CalmJournal</string>
+    <!-- Onboarding -->
+    <string name="welcome_title">Добро Пожаловать в Calm Journal!</string>
+    <string name="welcome_subtitle">Calm Journal — это твое личное пространство.
+        Все заметки хранятся только на твоем устройстве, никуда не отправляются и
+        недоступны никому, кроме тебя.</string>
+    <!-- Onboarding NextButton -->
+    <string name="onboarding_next">Далее</string>
+    <string name="onboarding_start_journal">Начать вести дневник</string>
+    <!-- Back Button -->
+    <string name="back_button_description">Назад</string>
 </resources>
