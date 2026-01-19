@@ -21,6 +21,9 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import com.vpnch.calmjournalapp.features.onboarding.OnboardingDimens.BOTTOM_SPACER
 import com.vpnch.calmjournalapp.features.onboarding.OnboardingDimens.TOTAL_PAGES
+import com.vpnch.calmjournalapp.features.onboarding.pages.AvatarSelectionPage
+import com.vpnch.calmjournalapp.features.onboarding.pages.NameInputPage
+import com.vpnch.calmjournalapp.features.onboarding.pages.WelcomeAnimationPage
 
 object OnboardingDimens {
     const val BOTTOM_SPACER = 25
@@ -72,9 +75,9 @@ fun OnboardingScreen(
                     .fillMaxWidth()
             ) { page ->
                 when (page) {
-                    0 -> WelcomeAnimationScreen()
-                    1 -> NameInputScreen()
-                    2 -> AvatarSelectionScreen()
+                    0 -> WelcomeAnimationPage()
+                    1 -> NameInputPage()
+                    2 -> AvatarSelectionPage()
                 }
             }
 

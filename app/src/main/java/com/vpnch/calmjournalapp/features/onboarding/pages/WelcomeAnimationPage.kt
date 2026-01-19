@@ -1,4 +1,4 @@
-package com.vpnch.calmjournalapp.features.onboarding
+package com.vpnch.calmjournalapp.features.onboarding.pages
 
 import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.Arrangement
@@ -23,11 +23,6 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.vpnch.calmjournalapp.R
-import com.vpnch.calmjournalapp.features.onboarding.WelcomeAnimationDimens.ANIMATION_SIZE
-import com.vpnch.calmjournalapp.features.onboarding.WelcomeAnimationDimens.ANIMATION_TOP_PADDING
-import com.vpnch.calmjournalapp.features.onboarding.WelcomeAnimationDimens.ANIMATION_TO_TEXT_SPACER
-import com.vpnch.calmjournalapp.features.onboarding.WelcomeAnimationDimens.TEXT_SECTION_WIDTH
-import com.vpnch.calmjournalapp.features.onboarding. WelcomeAnimationDimens.TEXT_VERTICAL_SPACING
 
 object WelcomeAnimationDimens {
     const val ANIMATION_TOP_PADDING = 54
@@ -38,7 +33,7 @@ object WelcomeAnimationDimens {
 }
 
 @Composable
-fun WelcomeAnimationScreen () {
+fun WelcomeAnimationPage () {
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -60,14 +55,14 @@ fun WelcomeAnimationScreen () {
             progress = { progress },
             modifier = Modifier
                 .padding(
-                    top = ANIMATION_TOP_PADDING.dp
-                ).size(ANIMATION_SIZE.dp)
+                    top = WelcomeAnimationDimens.ANIMATION_TOP_PADDING.dp
+                ).size(WelcomeAnimationDimens.ANIMATION_SIZE.dp)
         )
 
-        Spacer(modifier = Modifier.height(ANIMATION_TO_TEXT_SPACER.dp))
+        Spacer(modifier = Modifier.Companion.height(WelcomeAnimationDimens.ANIMATION_TO_TEXT_SPACER.dp))
 
         Column(
-            modifier = Modifier.width(TEXT_SECTION_WIDTH.dp)
+            modifier = Modifier.Companion.width(WelcomeAnimationDimens.TEXT_SECTION_WIDTH.dp)
         ) {
             Text(
                 text = stringResource(R.string.welcome_title),
@@ -75,7 +70,7 @@ fun WelcomeAnimationScreen () {
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(TEXT_VERTICAL_SPACING.dp))
+            Spacer(modifier = Modifier.Companion.height(WelcomeAnimationDimens.TEXT_VERTICAL_SPACING.dp))
 
             Text(
                 text = stringResource(R.string.welcome_subtitle),

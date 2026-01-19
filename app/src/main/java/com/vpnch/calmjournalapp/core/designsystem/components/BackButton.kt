@@ -49,7 +49,7 @@ fun BackButton(
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_back_button),
                 contentDescription = stringResource(R.string.back_button_description),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant  // ✅ Добавлен tint
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
