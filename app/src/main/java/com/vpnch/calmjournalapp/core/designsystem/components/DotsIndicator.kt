@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.vpnch.calmjournalapp.core.designsystem.components.DotsIndicatorDimens.DOT_SIZE
 import com.vpnch.calmjournalapp.core.designsystem.components.DotsIndicatorDimens.DOT_SPACING
 
-object DotsIndicatorDimens {
+private object DotsIndicatorDimens {
     const val DOT_SIZE = 7
     const val DOT_SPACING = 4
 }

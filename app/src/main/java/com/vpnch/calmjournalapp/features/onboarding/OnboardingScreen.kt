@@ -19,6 +19,8 @@ import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.ui.res.stringResource
+import com.vpnch.calmjournalapp.R
 import com.vpnch.calmjournalapp.features.onboarding.OnboardingDimens.BOTTOM_SPACER
 import com.vpnch.calmjournalapp.features.onboarding.OnboardingDimens.TOTAL_PAGES
 import com.vpnch.calmjournalapp.features.onboarding.pages.AvatarSelectionPage
@@ -47,6 +49,13 @@ fun OnboardingScreen(
             onComplete()
         }
     }
+
+    val nextButtonText = stringResource(
+        if (pagerState.currentPage == TOTAL_PAGES - 1)
+            R.string.onboarding_start_journal
+        else
+            R.string.onboarding_next
+    )
 
     val navigateBack: () -> Unit = {
         coroutineScope.launch {
@@ -91,7 +100,7 @@ fun OnboardingScreen(
             Spacer(modifier = Modifier.height(BOTTOM_SPACER.dp))
 
             NextButton(
-                pagerState = pagerState,
+                text = nextButtonText,
                 onNext = navigateNext
             )
 

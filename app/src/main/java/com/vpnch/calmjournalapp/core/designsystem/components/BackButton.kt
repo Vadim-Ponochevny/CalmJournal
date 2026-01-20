@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.dp
 import com.vpnch.calmjournalapp.R
 import com.vpnch.calmjournalapp.core.designsystem.components.BackButtonDimens.BACK_BUTTON_START_END_PADDING
 import com.vpnch.calmjournalapp.core.designsystem.components.BackButtonDimens.BACK_BUTTON_TOP_BOTTOM_PADDING
-object BackButtonDimens {
+
+private object BackButtonDimens {
     const val BACK_BUTTON_START_END_PADDING = 29
     const val BACK_BUTTON_TOP_BOTTOM_PADDING = 25
 }

@@ -10,4 +10,6 @@
     <string name="onboarding_start_journal">Начать вести дневник</string>
     <!-- Back Button -->
     <string name="back_button_description">Назад</string>
+    <!-- DataStore -->
+    <string name="default_user_name">Пользователь</string>
 </resources>
