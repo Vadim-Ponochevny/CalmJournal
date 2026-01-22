@@ -16,20 +16,10 @@ class OnboardingViewModel @Inject constructor(
 
     val userName = userPreferences.userNameFlow
 
-    private val _nameError = MutableStateFlow<String?>(null)
-    val nameError = _nameError.asStateFlow()
-
-    fun onNameChange(newName: String) {
-        _nameError.value = if (newName.trim().isEmpty()) "Введите имя" else null
+    fun onNameChange(name: String) {
+        viewModelScope.launch {
+            userPreferences.saveName(name)
+        }
     }
 
-    fun saveAndValidateName(): Boolean {
-        val trimmed = userName.value.trim()
-        return if (trimmed.isNotEmpty()) {
-            viewModelScope.launch {
-                userPreferences.saveName(trimmed)
-            }
-            true
-        } else false
-    }
 }

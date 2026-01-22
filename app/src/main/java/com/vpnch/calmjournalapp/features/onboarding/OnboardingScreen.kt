@@ -1,5 +1,6 @@
 package com.vpnch.calmjournalapp.features.onboarding
 
+import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +20,9 @@ import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.vpnch.calmjournalapp.R
 import com.vpnch.calmjournalapp.features.onboarding.OnboardingDimens.BOTTOM_SPACER
 import com.vpnch.calmjournalapp.features.onboarding.OnboardingDimens.TOTAL_PAGES
@@ -35,10 +38,19 @@ object OnboardingDimens {
 @Composable
 fun OnboardingScreen(
     onComplete: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: OnboardingViewModel = hiltViewModel()
 ) {
     val pagerState = rememberPagerState(pageCount = { TOTAL_PAGES })
     val coroutineScope = rememberCoroutineScope()
+
+    val name by viewModel.userName.collectAsState(initial = "")
+
+    val enabled = when (pagerState.currentPage) {
+        0 -> true
+        1 -> name.isNotBlank()
+        else -> true
+    }
 
     val navigateNext: () -> Unit = {
         if (pagerState.currentPage < TOTAL_PAGES - 1) {
@@ -101,7 +113,8 @@ fun OnboardingScreen(
 
             NextButton(
                 text = nextButtonText,
-                onNext = navigateNext
+                onNext = navigateNext,
+                enabled = enabled
             )
 
             Spacer(modifier = Modifier.height(BOTTOM_SPACER.dp))

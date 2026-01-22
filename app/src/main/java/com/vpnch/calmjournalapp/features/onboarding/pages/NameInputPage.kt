@@ -2,27 +2,33 @@ package com.vpnch.calmjournalapp.features.onboarding.pages
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.vpnch.calmjournalapp.features.onboarding.OnboardingViewModel
 
 @Composable
 fun NameInputPage(
-    onNext: () -> Unit,
     viewModel: OnboardingViewModel = hiltViewModel()
 ) {
-    var name by viewModel.userName.collectAsState(
+    val name by viewModel.userName.collectAsState(
         initial = ""
     )
-    var nameError by viewModel.nameError.collectAsState()
 
     Column(
         modifier = Modifier
@@ -31,44 +37,29 @@ fun NameInputPage(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = stringResource(R.string.name_input_title),
-            style = MaterialTheme.typography.displaySmall,
+            text = "Как мне вас называть?",
+            style = MaterialTheme.typography.headlineSmall,
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(18.dp))
-
         Text(
-            text = stringResource(R.string.name_input_subtitle),
-            style = MaterialTheme.typography.bodyLarge,
+            text = "Введите ваше имя или псевдоним",
+            style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(
             value = name,
             onValueChange = { viewModel.onNameChange(it) },
-            label = { Text(stringResource(R.string.enter_name)) },
-            modifier = Modifier.width(300.dp),
-            isError = nameError != null,
-            supportingText = {
-                nameError?.let { Text(it) }
-            },
+            modifier = Modifier.width(327.dp),
             singleLine = true,
             maxLines = 1
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(411.dp))
 
-        NextButton(
-            pagerState = rememberPagerState(),
-            onNext = {
-                if (viewModel.validateName()) {
-                    onNext()
-                }
-            }
-        )
     }
 }

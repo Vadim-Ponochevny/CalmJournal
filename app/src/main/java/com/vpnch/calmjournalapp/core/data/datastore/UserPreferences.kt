@@ -7,7 +7,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.vpnch.calmjournalapp.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
@@ -45,6 +44,6 @@ class UserPreferences @Inject constructor(
             }
         }
         .map { prefs ->
-            prefs[USER_NAME_KEY] ?: context.getString(R.string.default_user_name)
+            prefs[USER_NAME_KEY] ?: ""
         }
 }

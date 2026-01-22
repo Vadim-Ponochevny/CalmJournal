@@ -23,7 +23,8 @@ private object NextButtonDimens {
 fun NextButton(
     text: String,
     onNext: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enabled: Boolean
 ) {
     Box(
         modifier = modifier.fillMaxWidth(),
@@ -34,7 +35,7 @@ fun NextButton(
             modifier = modifier
                 .width(NEXT_BUTTON_WIDTH.dp)
                 .height(NEXT_BUTTON_HEIGHT.dp),
-            enabled = true
+            enabled = enabled,
         ) {
             Text(
                 text = text,
