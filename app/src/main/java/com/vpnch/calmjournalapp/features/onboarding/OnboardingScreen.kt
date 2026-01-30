@@ -20,7 +20,11 @@ import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.vpnch.calmjournalapp.R
@@ -39,16 +43,30 @@ object OnboardingDimens {
 fun OnboardingScreen(
     onComplete: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: OnboardingViewModel = hiltViewModel()
 ) {
-    val pagerState = rememberPagerState(pageCount = { TOTAL_PAGES })
+    val viewModel: OnboardingViewModel = hiltViewModel()
+    val selectedUri by viewModel.selectedUri.collectAsState()
+    val selectedDefaultAvatar by viewModel.selectedDefaultAvatar.collectAsState()
+
+    val nameState = rememberTextFieldState()
+
+    val pagerState = rememberPagerState(
+        pageCount = { TOTAL_PAGES }
+    )
     val coroutineScope = rememberCoroutineScope()
 
-    val name by viewModel.userName.collectAsState(initial = "")
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+
+    DisposableEffect(pagerState.currentPage) {
+        onDispose {
+            keyboardController?.hide()
+        }
+    }
 
     val enabled = when (pagerState.currentPage) {
         0 -> true
-        1 -> name.isNotBlank()
+        1 -> nameState.text.isNotBlank()
         else -> true
     }
 
@@ -58,6 +76,7 @@ fun OnboardingScreen(
                 pagerState.animateScrollToPage(pagerState.currentPage + 1)
             }
         } else {
+            viewModel.saveName(nameState.text.toString())
             onComplete()
         }
     }
@@ -73,6 +92,8 @@ fun OnboardingScreen(
         coroutineScope.launch {
             pagerState.animateScrollToPage(pagerState.currentPage - 1)
         }
+        focusManager.clearFocus()
+        keyboardController?.hide()
     }
 
     val showBackButton = pagerState.currentPage > 0
@@ -90,15 +111,26 @@ fun OnboardingScreen(
 
             HorizontalPager(
                 state = pagerState,
-                userScrollEnabled = true,
+                userScrollEnabled = false,
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
             ) { page ->
                 when (page) {
                     0 -> WelcomeAnimationPage()
-                    1 -> NameInputPage()
-                    2 -> AvatarSelectionPage()
+                    1 -> NameInputPage(
+                        nameState = nameState
+                    )
+                    2 -> AvatarSelectionPage(
+                        selectedUri = selectedUri,
+                        selectedDefaultAvatar = selectedDefaultAvatar,
+                        onCustomAvatarSelected = {
+                            viewModel.onCustomAvatarSelected(it)
+                        },
+                        onDefaultAvatarSelected = {
+                            viewModel.onDefaultAvatarSelected(it)
+                        }
+                    )
                 }
             }
 
@@ -121,4 +153,5 @@ fun OnboardingScreen(
         }
     }
 }
+
 

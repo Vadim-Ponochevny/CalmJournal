@@ -48,7 +48,7 @@ fun BackButton(
                 )
         ) {
             Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_back_button),
+                imageVector = ImageVector.vectorResource(id = R.drawable.btn_back),
                 contentDescription = stringResource(R.string.back_button_description),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )

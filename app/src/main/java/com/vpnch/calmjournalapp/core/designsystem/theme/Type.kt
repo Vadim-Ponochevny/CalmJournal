@@ -38,7 +38,6 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 32.sp,
-        letterSpacing = 0.25.sp
     ),
 
     // Главный: "Привет, пользователь!"
