@@ -1,4 +1,4 @@
-package com.vpnch.calmjournalapp.core.designsystem.components
+package com.vpnch.calmjournalapp.features.onboarding.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,8 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.vpnch.calmjournalapp.core.designsystem.components.NextButtonDimens.NEXT_BUTTON_HEIGHT
-import com.vpnch.calmjournalapp.core.designsystem.components.NextButtonDimens.NEXT_BUTTON_WIDTH
 
 private object NextButtonDimens {
     const val NEXT_BUTTON_WIDTH = 290
@@ -33,8 +31,8 @@ fun NextButton(
         Button(
             onClick = onNext,
             modifier = modifier
-                .width(NEXT_BUTTON_WIDTH.dp)
-                .height(NEXT_BUTTON_HEIGHT.dp),
+                .width(NextButtonDimens.NEXT_BUTTON_WIDTH.dp)
+                .height(NextButtonDimens.NEXT_BUTTON_HEIGHT.dp),
             enabled = enabled,
         ) {
             Text(

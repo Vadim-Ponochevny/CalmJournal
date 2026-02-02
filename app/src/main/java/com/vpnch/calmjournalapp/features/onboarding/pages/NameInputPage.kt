@@ -17,14 +17,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.vpnch.calmjournalapp.core.designsystem.components.InputNameField
+import com.vpnch.calmjournalapp.R
+import com.vpnch.calmjournalapp.features.onboarding.components.InputNameField
+import com.vpnch.calmjournalapp.features.onboarding.pages.NameInputDimens.FIELD_TOP_MARGIN
+import com.vpnch.calmjournalapp.features.onboarding.pages.NameInputDimens.TEXT_BLOCK_CONTENT_WIDTH
+import com.vpnch.calmjournalapp.features.onboarding.pages.NameInputDimens.TITLE_SUBTITLE_GAP
+
+private object NameInputDimens {
+    const val TEXT_BLOCK_CONTENT_WIDTH = 335
+    const val TITLE_SUBTITLE_GAP = 8
+    const val FIELD_TOP_MARGIN = 32
+}
 
 @Composable
 fun NameInputPage(
     modifier: Modifier = Modifier,
     nameState: TextFieldState,
+    navigateNext: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -41,38 +53,38 @@ fun NameInputPage(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Top
         ) {
             Column(
-                modifier = Modifier.width(335.dp),
+                modifier = Modifier.width(TEXT_BLOCK_CONTENT_WIDTH.dp),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Как мне вас называть?",
+                    text = stringResource(R.string.onboarding_name_input_title),
                     style = MaterialTheme.typography.headlineSmall,
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(TITLE_SUBTITLE_GAP.dp))
 
                 Text(
-                    text = "Введите ваше имя или псевдоним",
+                    text = stringResource(R.string.onboarding_name_input_subtitle),
                     style = MaterialTheme.typography.titleLarge,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(FIELD_TOP_MARGIN.dp))
 
             InputNameField(
-                nameState
+                nameState = nameState,
+                navigateNext = navigateNext
             )
-
-            Spacer(modifier = Modifier.height(411.dp))
 
         }
     }

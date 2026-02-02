@@ -1,13 +1,29 @@
 <resources>
     <string name="app_name">CalmJournal</string>
-    <!-- Onboarding -->
-    <string name="welcome_title">Добро Пожаловать в Calm Journal!</string>
-    <string name="welcome_subtitle">Calm Journal — это твое личное пространство.
+    <!-- ONBOARDING -->
+    <!-- Welcome Page -->
+    <string name="onboarding_welcome_title">Добро Пожаловать в Calm Journal!</string>
+    <string name="onboarding_welcome_subtitle">Calm Journal — это твое личное пространство.
         Все заметки хранятся только на твоем устройстве, никуда не отправляются и
         недоступны никому, кроме тебя.</string>
-    <!-- Onboarding NextButton -->
+    <!-- NameInput Page -->
+    <string name="onboarding_name_input_title">Как мне вас называть?</string>
+    <string name="onboarding_name_input_subtitle">Введите ваше имя или псевдоним</string>
+    <string name="onboarding_name_max_length">Максимум символов - %s</string>
+    <!-- AvatarSelection Page -->
+    <string name="onboarding_avatar_page_title">Фотография профиля</string>
+    <string name="onboarding_avatar_page_subtitle">Выберите из предложенных или загрузите из галереи</string>
+    <string name="onboarding_camera_gallery_dialog_title">Выбрать фото</string>
+    <string name="onboarding_camera_button">Камера</string>
+    <string name="onboarding_gallery_button">Галерея</string>
+    <string name="onboarding_cache_error">Ошибка с кэшем</string>
+
+    <!--  NextButton -->
     <string name="onboarding_next">Далее</string>
-    <string name="onboarding_start_journal">Начать вести дневник</string>
+    <string name="onboarding_start_journal">Начать</string>
+
+
+
     <!-- Back Button -->
     <string name="back_button_description">Назад</string>
     <!-- DataStore -->

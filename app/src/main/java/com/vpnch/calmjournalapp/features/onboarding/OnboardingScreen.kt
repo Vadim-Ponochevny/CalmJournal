@@ -13,12 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.vpnch.calmjournalapp.core.designsystem.components.DotsIndicator
+import com.vpnch.calmjournalapp.features.onboarding.components.DotsIndicator
 import com.vpnch.calmjournalapp.core.designsystem.components.BackButton
-import com.vpnch.calmjournalapp.core.designsystem.components.NextButton
+import com.vpnch.calmjournalapp.features.onboarding.components.NextButton
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.runtime.DisposableEffect
@@ -42,12 +43,10 @@ object OnboardingDimens {
 @Composable
 fun OnboardingScreen(
     onComplete: () -> Unit,
+    avatarState: AvatarState,
+    event: (OnBoardingEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val viewModel: OnboardingViewModel = hiltViewModel()
-    val selectedUri by viewModel.selectedUri.collectAsState()
-    val selectedDefaultAvatar by viewModel.selectedDefaultAvatar.collectAsState()
-
     val nameState = rememberTextFieldState()
 
     val pagerState = rememberPagerState(
@@ -64,20 +63,30 @@ fun OnboardingScreen(
         }
     }
 
-    val enabled = when (pagerState.currentPage) {
+    val isCurrentPageValid = when (pagerState.currentPage) {
         0 -> true
         1 -> nameState.text.isNotBlank()
+        2 -> avatarState.selectedType != AvatarType.NONE
         else -> true
     }
 
     val navigateNext: () -> Unit = {
-        if (pagerState.currentPage < TOTAL_PAGES - 1) {
-            coroutineScope.launch {
-                pagerState.animateScrollToPage(pagerState.currentPage + 1)
+        if (isCurrentPageValid) {
+            val isLastPage = pagerState.currentPage >= TOTAL_PAGES - 1
+
+            if (isLastPage) {
+                event(
+                    OnBoardingEvent.SaveOnBoardingData(
+                        name = nameState.toString(),
+                        avatarState = avatarState
+                    )
+                )
+                onComplete()
+            } else {
+                coroutineScope.launch {
+                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                }
             }
-        } else {
-            viewModel.saveName(nameState.text.toString())
-            onComplete()
         }
     }
 
@@ -119,17 +128,18 @@ fun OnboardingScreen(
                 when (page) {
                     0 -> WelcomeAnimationPage()
                     1 -> NameInputPage(
-                        nameState = nameState
+                        nameState = nameState,
+                        navigateNext = navigateNext
                     )
+
                     2 -> AvatarSelectionPage(
-                        selectedUri = selectedUri,
-                        selectedDefaultAvatar = selectedDefaultAvatar,
-                        onCustomAvatarSelected = {
-                            viewModel.onCustomAvatarSelected(it)
+                        avatarState = avatarState,
+                        onCustomAvatarSelected = { uri ->
+                            event(OnBoardingEvent.OnCustomAvatarSelected(uri = uri))
                         },
-                        onDefaultAvatarSelected = {
-                            viewModel.onDefaultAvatarSelected(it)
-                        }
+                        onDefaultAvatarSelected = { resId ->
+                            event(OnBoardingEvent.OnDefaultAvatarSelected(resId = resId))
+                        },
                     )
                 }
             }
@@ -146,10 +156,12 @@ fun OnboardingScreen(
             NextButton(
                 text = nextButtonText,
                 onNext = navigateNext,
-                enabled = enabled
+                enabled = isCurrentPageValid
             )
 
-            Spacer(modifier = Modifier.height(BOTTOM_SPACER.dp))
+            Spacer(modifier = Modifier
+                .navigationBarsPadding()
+                .height(BOTTOM_SPACER.dp))
         }
     }
 }

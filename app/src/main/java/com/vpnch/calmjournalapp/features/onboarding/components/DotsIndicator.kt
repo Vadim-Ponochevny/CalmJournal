@@ -1,4 +1,4 @@
-package com.vpnch.calmjournalapp.core.designsystem.components
+package com.vpnch.calmjournalapp.features.onboarding.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,8 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.vpnch.calmjournalapp.core.designsystem.components.DotsIndicatorDimens.DOT_SIZE
-import com.vpnch.calmjournalapp.core.designsystem.components.DotsIndicatorDimens.DOT_SPACING
+import com.vpnch.calmjournalapp.features.onboarding.components.DotsIndicatorDimens.DOT_SIZE
+import com.vpnch.calmjournalapp.features.onboarding.components.DotsIndicatorDimens.DOT_SPACING
 
 private object DotsIndicatorDimens {
     const val DOT_SIZE = 7
