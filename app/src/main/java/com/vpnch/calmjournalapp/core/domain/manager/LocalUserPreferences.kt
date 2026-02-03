@@ -1,4 +1,4 @@
-package com.vpnch.calmjournalapp.core.domain.localmanager
+package com.vpnch.calmjournalapp.core.domain.manager
 
 import kotlinx.coroutines.flow.Flow
 

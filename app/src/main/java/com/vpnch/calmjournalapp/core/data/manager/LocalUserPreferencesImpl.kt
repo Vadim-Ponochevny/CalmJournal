@@ -1,4 +1,4 @@
-package com.vpnch.calmjournalapp.core.data.localmanager
+package com.vpnch.calmjournalapp.core.data.manager
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.vpnch.calmjournalapp.core.domain.localmanager.LocalUserPreferences
+import com.vpnch.calmjournalapp.core.domain.manager.LocalUserPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jakarta.inject.Inject
 import jakarta.inject.Singleton

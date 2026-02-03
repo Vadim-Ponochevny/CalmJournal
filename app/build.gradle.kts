@@ -42,6 +42,10 @@ android {
 }
 
 dependencies {
+    // Splash
+    implementation(libs.androidx.core.splashscreen)
+    // navigation
+    implementation(libs.androidx.navigation.compose)
     // coil
     implementation(libs.coil.compose)
     // lottie
@@ -51,6 +55,7 @@ dependencies {
     implementation(libs.androidx.datastore)
     // hilt
     implementation(libs.hilt.android)
+    implementation(libs.transportation.consumer)
     ksp(libs.hilt.compiler)
     // Compose
     implementation(libs.androidx.lifecycle.viewmodel.compose)

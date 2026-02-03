@@ -1,26 +1,39 @@
 package com.vpnch.calmjournalapp
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.vpnch.calmjournalapp.core.domain.usecases.onboarding.ReadOnboardingCompleted
+import com.vpnch.calmjournalapp.core.navigation.Route
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val appEntryUseClass: AppEntryUseCases
+    private val readOnboardingCompleted: ReadOnboardingCompleted
 ) : ViewModel() {
 
-    var splashCondition by mutableStateOf(true)
+    var splashState by mutableStateOf(true)
         private set
 
     var startDestination by mutableStateOf(Route.AppStartNavigation.route)
         private set
 
     init {
-        appEntryUseClass.readAppEntry().onEach { shouldStartFromHomeScreen ->
-            if(shouldStartFromHomeScreen) {
-                startDestination = Route.NewsNavigation.route
-            } else {
-                startDestination = Route.AppStartNavigation.route
+        viewModelScope.launch {
+            readOnboardingCompleted().collect { isOnboardingCompleted ->
+                startDestination = if (isOnboardingCompleted) {
+                    Route.MainNavigation.route
+                } else {
+                    Route.AppStartNavigation.route
+                }
+                delay(300)
+                splashState = false
             }
-            delay(300)
-            splashCondition = false
-        }.launchIn(viewModelScope)
-
+        }
     }
 }

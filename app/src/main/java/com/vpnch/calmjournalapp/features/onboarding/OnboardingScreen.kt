@@ -1,6 +1,5 @@
 package com.vpnch.calmjournalapp.features.onboarding
 
-import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,11 +22,9 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.vpnch.calmjournalapp.R
 import com.vpnch.calmjournalapp.features.onboarding.OnboardingDimens.BOTTOM_SPACER
 import com.vpnch.calmjournalapp.features.onboarding.OnboardingDimens.TOTAL_PAGES
@@ -42,13 +39,11 @@ object OnboardingDimens {
 
 @Composable
 fun OnboardingScreen(
-    onComplete: () -> Unit,
     avatarState: AvatarState,
     event: (OnBoardingEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val nameState = rememberTextFieldState()
-
     val pagerState = rememberPagerState(
         pageCount = { TOTAL_PAGES }
     )
@@ -57,6 +52,7 @@ fun OnboardingScreen(
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
+    // hide keyboard when changing the page
     DisposableEffect(pagerState.currentPage) {
         onDispose {
             keyboardController?.hide()
@@ -81,7 +77,6 @@ fun OnboardingScreen(
                         avatarState = avatarState
                     )
                 )
-                onComplete()
             } else {
                 coroutineScope.launch {
                     pagerState.animateScrollToPage(pagerState.currentPage + 1)
