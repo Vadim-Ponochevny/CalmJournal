@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vpnch.calmjournalapp.core.domain.usecases.onboarding.ReadOnboardingCompleted
+import com.vpnch.calmjournalapp.core.domain.usecases.onboarding.ReadOnboardingCompletedUseCase
 import com.vpnch.calmjournalapp.core.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val readOnboardingCompleted: ReadOnboardingCompleted
+    private val readOnboardingCompleted: ReadOnboardingCompletedUseCase
 ) : ViewModel() {
 
     var splashState by mutableStateOf(true)

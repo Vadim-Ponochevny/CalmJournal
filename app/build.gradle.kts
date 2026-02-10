@@ -42,6 +42,8 @@ android {
 }
 
 dependencies {
+    // ONNX
+    implementation(libs.onnxruntime.android)
     // Splash
     implementation(libs.androidx.core.splashscreen)
     // navigation

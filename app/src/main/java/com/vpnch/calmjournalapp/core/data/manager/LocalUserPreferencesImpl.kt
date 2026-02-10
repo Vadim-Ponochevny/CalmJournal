@@ -42,4 +42,5 @@ class LocalUserPreferencesImpl @Inject constructor(
             prefs[ONBOARDING_COMPLETED_KEY] = true
         }
     }
+
 }

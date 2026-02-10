@@ -3,7 +3,7 @@ package com.vpnch.calmjournalapp.features.onboarding
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vpnch.calmjournalapp.core.domain.usecases.onboarding.SaveOnboardingData
+import com.vpnch.calmjournalapp.core.domain.usecases.onboarding.SaveOnboardingDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
-    private val saveOnboardingData: SaveOnboardingData
+    private val saveOnboardingData: SaveOnboardingDataUseCase
 ) : ViewModel() {
 
     private val _avatarState = MutableStateFlow(AvatarState())
