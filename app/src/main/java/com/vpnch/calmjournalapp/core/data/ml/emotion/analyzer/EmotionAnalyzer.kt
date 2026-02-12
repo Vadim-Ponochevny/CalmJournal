@@ -1,4 +1,4 @@
-package com.vpnch.calmjournalapp.core.ml.analyzer
+package com.vpnch.calmjournalapp.core.data.ml.emotion.analyzer
 
 interface EmotionAnalyzer {
 

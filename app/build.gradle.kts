@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -10,6 +13,10 @@ android {
     namespace = "com.vpnch.calmjournalapp"
     compileSdk = 36
 
+    val file = rootProject.file("local.properties")
+    val properties = Properties()
+    properties.load(FileInputStream(file))
+
     defaultConfig {
         applicationId = "com.vpnch.calmjournalapp"
         minSdk = 24
@@ -18,6 +25,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "GIGACHAT_AUTH_KEY", properties.getProperty("GIGACHAT_AUTH_KEY"))
     }
 
     buildTypes {
@@ -38,10 +47,15 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
 dependencies {
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
     // ONNX
     implementation(libs.onnxruntime.android)
     // Splash
@@ -77,4 +91,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    debugImplementation(libs.logging.interceptor)
 }

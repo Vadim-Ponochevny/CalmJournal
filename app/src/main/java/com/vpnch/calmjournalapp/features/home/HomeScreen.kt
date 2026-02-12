@@ -5,20 +5,21 @@ import androidx.compose.runtime.Composable
 
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: TestEmotionViewModel = hiltViewModel()
+    viewModel: DiaryAnalysisViewModel = hiltViewModel()
 ) {
-    val state by viewModel.state.collectAsState()
-    var text by remember { mutableStateOf("") }
+    val userText by viewModel.userText.collectAsState()
+    val analysisResult by viewModel.analysisResult.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
     Column(
         modifier = Modifier
@@ -26,153 +27,71 @@ fun HomeScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // Заголовок
-        Text(
-            text = "🧪 Тест модели эмоций",
-            style = MaterialTheme.typography.headlineSmall
-        )
 
-        // Поле ввода
         OutlinedTextField(
-            value = text,
-            onValueChange = { text = it },
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Введите текст для анализа...") },
-            maxLines = 3
+            value = userText,
+            onValueChange = viewModel::onUserTextChanged,
+            label = { Text("Что сегодня произошло?") },
+            placeholder = { Text("Расскажите о своих мыслях и чувствах...") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(120.dp),  // многострочное поле
+            maxLines = 4,
+            minLines = 3,
+            colors = TextFieldDefaults.colors(
+                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                unfocusedIndicatorColor = MaterialTheme.colorScheme.outline
+            ),
+            trailingIcon = {
+                if (userText.isNotBlank()) {
+                    TextButton(
+                        onClick = { viewModel.clearUserText() }
+                    ) { Text("Очистить") }
+                }
+            }
         )
 
-        // Кнопки
-        Row(
+        // 2. КНОПКА АНАЛИЗА
+        Button(
+            onClick = { viewModel.analyzeDiaryText() },
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            enabled = userText.isNotBlank() && !isLoading
         ) {
-            Button(
-                onClick = { viewModel.analyzeText(text) },
-                modifier = Modifier.weight(1f),
-                enabled = text.isNotBlank() && !state.isLoading
-            ) {
-                if (state.isLoading) {
+            if (isLoading) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     CircularProgressIndicator(
-                        modifier = Modifier.size(20.dp),
-                        color = MaterialTheme.colorScheme.onPrimary
+                        modifier = Modifier.size(16.dp),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        strokeWidth = 2.dp
                     )
-                } else {
-                    Text("Анализировать")
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Анализирую...")
                 }
-            }
-
-            Button(
-                onClick = { viewModel.clear() },
-                modifier = Modifier.weight(1f),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.secondary
-                )
-            ) {
-                Text("Очистить")
+            } else {
+                Text("Получить мягкий совет")
             }
         }
 
-        // Результат
-        if (state.isLoading) {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-
-        state.result?.let { result ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(300.dp) // Фиксированная высота для скролла
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    // Заголовок (не скроллируется)
-                    Text(
-                        text = "📊 Результат:",
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(16.dp)
-                    )
-
-                    Divider()
-
-                    // Содержимое (скроллируется)
-                    LazyColumn(
-                        modifier = Modifier.weight(1f) // Занимает всё оставшееся пространство
-                    ) {
-                        item {
-                            Text(
-                                text = result.toString(),
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.padding(16.dp)
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        // Ошибка
-        state.error?.let { error ->
+        // 3. ПОЛЕ С ОТВЕТОМ ИИ
+        if (analysisResult != null) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
                 )
             ) {
                 Column(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "❌ Ошибка:",
-                        style = MaterialTheme.typography.titleMedium
+                        text = "🤗 Совет от ИИ-помощника",
+                        style = MaterialTheme.typography.titleMedium,
                     )
-
                     Spacer(modifier = Modifier.height(8.dp))
-
                     Text(
-                        text = error,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-            }
-        }
-
-        // Примеры для теста
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = "📝 Примеры для теста:",
-                style = MaterialTheme.typography.titleMedium
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            val examples = listOf(
-                "Я счастлив сегодня!",
-                "Мне грустно и одиноко",
-                "Злюсь на начальника",
-                "Волнуюсь перед экзаменом",
-                "Люблю свою семью"
-            )
-
-            examples.forEach { example ->
-                OutlinedButton(
-                    onClick = {
-                        text = example
-                        viewModel.analyzeText(example)
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = example,
-                        maxLines = 1,
-                        modifier = Modifier.weight(1f)
+                        text = analysisResult!!,
+                        style = MaterialTheme.typography.bodyMedium,
+                        lineHeight = 24.sp
                     )
                 }
             }

@@ -1,4 +1,4 @@
-package com.vpnch.calmjournalapp.core.data.manager
+package com.vpnch.calmjournalapp.core.data.user.local
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -7,7 +7,8 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.vpnch.calmjournalapp.core.domain.manager.LocalUserPreferences
+import com.vpnch.calmjournalapp.core.domain.models.User
+import com.vpnch.calmjournalapp.core.domain.repository.LocalUserPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
@@ -30,15 +31,15 @@ class LocalUserPreferencesImpl @Inject constructor(
     private val USER_AVATAR_DATA_KEY = stringPreferencesKey("avatar_data")
     private val ONBOARDING_COMPLETED_KEY = booleanPreferencesKey("onboarding_completed")
 
-    override fun onboardingCompleted(): Flow<Boolean>{
+    override fun onboardingCompleted(): Flow<Boolean> {
         return context.dataStore.data
             .map { prefs -> (prefs[ONBOARDING_COMPLETED_KEY] ?: false) }
     }
 
-    override suspend fun saveOnboardingData(name: String, avatarData: String?) {
+    override suspend fun saveOnboardingUserData(user: User) {
         context.dataStore.edit { prefs ->
-            prefs[USER_NAME_KEY] = name
-            avatarData?.let { prefs[USER_AVATAR_DATA_KEY] = it }
+            prefs[USER_NAME_KEY] = user.name
+            user.avatarData?.let { prefs[USER_AVATAR_DATA_KEY] = it }
             prefs[ONBOARDING_COMPLETED_KEY] = true
         }
     }

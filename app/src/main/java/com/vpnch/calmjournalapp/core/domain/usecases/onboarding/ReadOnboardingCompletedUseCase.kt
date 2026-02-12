@@ -1,6 +1,6 @@
 package com.vpnch.calmjournalapp.core.domain.usecases.onboarding
 
-import com.vpnch.calmjournalapp.core.domain.manager.LocalUserPreferences
+import com.vpnch.calmjournalapp.core.domain.repository.LocalUserPreferences
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 

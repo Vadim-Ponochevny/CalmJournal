@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">ngw.devices.sberbank.ru</domain>
+        <domain includeSubdomains="true">gigachat.devices.sberbank.ru</domain>
+        <trust-anchors>
+            <!-- Доверяем системным + пользовательским CA -->
+            <certificates src="system"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </domain-config>
+</network-security-config>

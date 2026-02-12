@@ -1,4 +1,4 @@
-package com.vpnch.calmjournalapp.core.ml
+package com.vpnch.calmjournalapp.core.data.ml.emotion.tokenizer
 
 import android.content.Context
 import android.util.Log

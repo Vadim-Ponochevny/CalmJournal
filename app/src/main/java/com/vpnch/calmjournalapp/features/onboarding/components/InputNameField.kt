@@ -18,25 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
 import com.vpnch.calmjournalapp.R
-import com.vpnch.calmjournalapp.features.onboarding.components.InputNameFieldDimens.COUNTER_HORIZONTAL_PADDING
-import com.vpnch.calmjournalapp.features.onboarding.components.InputNameFieldDimens.COUNTER_VERTICAL_PADDING
-import com.vpnch.calmjournalapp.features.onboarding.components.InputNameFieldDimens.FIELD_CORNER_RADIUS
-import com.vpnch.calmjournalapp.features.onboarding.components.InputNameFieldDimens.FIELD_WIDTH
-import com.vpnch.calmjournalapp.features.onboarding.components.InputNameFieldDimens.HORIZONTAL_PADDING
-import com.vpnch.calmjournalapp.features.onboarding.components.InputNameFieldDimens.MAX_LENGTH_DEFAULT
-import com.vpnch.calmjournalapp.features.onboarding.components.InputNameFieldDimens.VERTICAL_PADDING
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.cornerRadiusLarge
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.fieldMaxWidth
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.spacingMedium
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.spacingSmallRegular
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.spacingTiny
 
-private object InputNameFieldDimens {
-    const val FIELD_WIDTH = 327
-    const val HORIZONTAL_PADDING = 20
-    const val VERTICAL_PADDING = 12
-    const val COUNTER_VERTICAL_PADDING = 4
-    const val COUNTER_HORIZONTAL_PADDING = 20
-    const val MAX_LENGTH_DEFAULT = 30
-    const val FIELD_CORNER_RADIUS = 25
-}
+private const val MAX_LENGTH_DEFAULT = 30
 
 @Composable
 fun InputNameField(
@@ -51,14 +40,14 @@ fun InputNameField(
             state = nameState,
             textStyle = MaterialTheme.typography.bodySmall,
             modifier = Modifier
-                .width(FIELD_WIDTH.dp)
+                .width(fieldMaxWidth)
                 .background(
                     color = MaterialTheme.colorScheme.surfaceVariant,
-                    shape = RoundedCornerShape(FIELD_CORNER_RADIUS.dp)
+                    shape = RoundedCornerShape(cornerRadiusLarge)
                 )
                 .padding(
-                    horizontal = HORIZONTAL_PADDING.dp,
-                    vertical = VERTICAL_PADDING.dp
+                    horizontal = spacingMedium,
+                    vertical = spacingSmallRegular
                 ),
             inputTransformation = InputTransformation.maxLength(MAX_LENGTH_DEFAULT),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -76,10 +65,10 @@ fun InputNameField(
                     MAX_LENGTH_DEFAULT
                 ),
                 modifier = Modifier
-                    .width(FIELD_WIDTH.dp)
+                    .width(fieldMaxWidth)
                     .padding(
-                        horizontal = COUNTER_HORIZONTAL_PADDING.dp,
-                        vertical = COUNTER_VERTICAL_PADDING.dp
+                        horizontal = spacingMedium,
+                        vertical = spacingTiny
                     ),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSecondary

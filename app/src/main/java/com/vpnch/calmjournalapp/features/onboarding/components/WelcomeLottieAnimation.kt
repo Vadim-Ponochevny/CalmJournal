@@ -5,22 +5,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.vpnch.calmjournalapp.R
-import com.vpnch.calmjournalapp.features.onboarding.components.WelcomeLottieAnimationDimens.ANIMATION_SIZE
-import com.vpnch.calmjournalapp.features.onboarding.components.WelcomeLottieAnimationDimens.ANIMATION_TOP_PADDING
-import com.vpnch.calmjournalapp.features.onboarding.components.WelcomeLottieAnimationDimens.SPEED_OF_ANIMATION
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.lottieSize
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.spacingExtraHuge
 
-private object  WelcomeLottieAnimationDimens {
-    const val ANIMATION_TOP_PADDING = 54
-    const val ANIMATION_SIZE = 250
-    const val SPEED_OF_ANIMATION = 1.0f
-}
+private const val SPEED_OF_ANIMATION = 1.0f
 
 @Composable
 fun WelcomeLottieAnimation() {
@@ -39,7 +33,7 @@ fun WelcomeLottieAnimation() {
         progress = { progress },
         modifier = Modifier
             .padding(
-                top = ANIMATION_TOP_PADDING.dp
-            ).size(ANIMATION_SIZE.dp)
+                top = spacingExtraHuge
+            ).size(lottieSize)
     )
 }

@@ -2,54 +2,50 @@ package com.vpnch.calmjournalapp.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vpnch.calmjournalapp.core.domain.models.EmotionAnalysisResult
-import com.vpnch.calmjournalapp.core.domain.models.EmotionScore
-import com.vpnch.calmjournalapp.core.domain.usecases.analyze.AnalyzeJournalEntryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import android.util.Log
+import com.vpnch.calmjournalapp.core.data.gigachat.repository.JournalInsightRepositoryImpl
+import kotlinx.coroutines.flow.StateFlow
 
 @HiltViewModel
-class TestEmotionViewModel @Inject constructor(
-    private val analyzeEmotionUseCase: AnalyzeJournalEntryUseCase
+class DiaryAnalysisViewModel @Inject constructor(
+    private val gigaRepo: JournalInsightRepositoryImpl
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(TestEmotionState())
-    val state = _state.asStateFlow()
+    private val _userText = MutableStateFlow("")
+    val userText: StateFlow<String> = _userText.asStateFlow()
 
-    fun analyzeText(text: String) {
+    private val _analysisResult = MutableStateFlow<String?>(null)
+    val analysisResult: StateFlow<String?> = _analysisResult.asStateFlow()
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
+    fun onUserTextChanged(text: String) {
+        _userText.value = text
+    }
+
+    fun clearUserText() {
+        _userText.value = ""
+        _analysisResult.value = null  // очищаем и ответ
+    }
+
+    fun analyzeDiaryText() {
         viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true)
+            _isLoading.value = true
+            _analysisResult.value = null  // сбрасываем предыдущий ответ
 
             try {
-                val result = analyzeEmotionUseCase(text)
-                _state.value = _state.value.copy(
-                    isLoading = false,
-                    result = result,
-                    error = null
-                )
-                Log.i("result", "$result")
+                val result = gigaRepo.analyzeJournalEntry(_userText.value)
+//                _analysisResult.value = result
             } catch (e: Exception) {
-                _state.value = _state.value.copy(
-                    isLoading = false,
-                    error = e.message ?: "Ошибка",
-                    result = null
-                )
+                _analysisResult.value = "Не удалось получить ответ. Проверьте подключение к интернету."
+            } finally {
+                _isLoading.value = false
             }
         }
     }
-
-    fun clear() {
-        _state.value = TestEmotionState()
-    }
 }
-
-data class TestEmotionState(
-    val isLoading: Boolean = false,
-    val result: Any? = null,
-    val error: String? = null
-)

@@ -10,12 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-
-private object NextButtonDimens {
-    const val NEXT_BUTTON_WIDTH = 290
-    const val NEXT_BUTTON_HEIGHT = 49
-}
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.nextButtonHeight
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.nextButtonWidth
 
 @Composable
 fun NextButton(
@@ -31,8 +27,8 @@ fun NextButton(
         Button(
             onClick = onNext,
             modifier = modifier
-                .width(NextButtonDimens.NEXT_BUTTON_WIDTH.dp)
-                .height(NextButtonDimens.NEXT_BUTTON_HEIGHT.dp),
+                .width(nextButtonWidth)
+                .height(nextButtonHeight),
             enabled = enabled,
         ) {
             Text(

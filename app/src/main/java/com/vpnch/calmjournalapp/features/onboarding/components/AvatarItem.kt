@@ -20,18 +20,11 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.vpnch.calmjournalapp.R
-import com.vpnch.calmjournalapp.features.onboarding.components.AvatarItemDimens.ADD_ICON_SIZE
-import com.vpnch.calmjournalapp.features.onboarding.components.AvatarItemDimens.SELECTED_BORDER_WIDTH
-import com.vpnch.calmjournalapp.features.onboarding.components.AvatarItemDimens.SIZE
-
-private object AvatarItemDimens {
-    const val SIZE = 90
-    const val ADD_ICON_SIZE = 28
-    const val SELECTED_BORDER_WIDTH = 4
-}
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.avatarSize
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.avatarAddIconSize
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.avatarSelectedBorderWidth
 
 @Composable
 fun AvatarItem(
@@ -43,7 +36,7 @@ fun AvatarItem(
 ) {
     Box(
         modifier = Modifier
-            .size(SIZE.dp)
+            .size(avatarSize)
             .aspectRatio(1f)
             .clip(CircleShape)
             .clickable { onClick() }
@@ -51,7 +44,7 @@ fun AvatarItem(
             .then(
                 if (isSelected) {
                     Modifier.border(
-                        width = SELECTED_BORDER_WIDTH.dp,
+                        width = avatarSelectedBorderWidth,
                         color = MaterialTheme.colorScheme.primary,
                         shape = CircleShape
                     )
@@ -65,7 +58,7 @@ fun AvatarItem(
                 imageVector = ImageVector.vectorResource(R.drawable.btn_add_avatar),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSecondary,
-                modifier = Modifier.size(ADD_ICON_SIZE.dp)
+                modifier = Modifier.size(avatarAddIconSize)
             )
 
             imageUri != null -> AsyncImage(

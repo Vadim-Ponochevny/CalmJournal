@@ -1,7 +1,5 @@
 package com.vpnch.calmjournalapp.features.onboarding.components
 
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,21 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.vpnch.calmjournalapp.R
-import com.vpnch.calmjournalapp.features.onboarding.components.CameraGalleryDialogDimens.BUTTON_CONTENT_PADDING_HORIZONTAL
-import com.vpnch.calmjournalapp.features.onboarding.components.CameraGalleryDialogDimens.BUTTON_CONTENT_PADDING_VERTICAL
-import com.vpnch.calmjournalapp.features.onboarding.components.CameraGalleryDialogDimens.DIALOG_CORNER_RADIUS
-import com.vpnch.calmjournalapp.features.onboarding.components.CameraGalleryDialogDimens.DIALOG_MIN_HEIGHT
-import com.vpnch.calmjournalapp.features.onboarding.components.CameraGalleryDialogDimens.DIALOG_PADDING
-
-private object CameraGalleryDialogDimens {
-    const val DIALOG_CORNER_RADIUS = 25
-    const val DIALOG_PADDING = 24
-    const val DIALOG_MIN_HEIGHT = 200
-    const val BUTTON_CONTENT_PADDING_HORIZONTAL = 8
-    const val BUTTON_CONTENT_PADDING_VERTICAL = 12
-}
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.cornerRadiusLarge
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.dialogMinHeight
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.spacingLarge
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.spacingSmall
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.spacingSmallRegular
 
 @Composable
 fun CameraGalleryDialog(
@@ -57,13 +46,13 @@ fun CameraGalleryDialog(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .wrapContentHeight(),
-            shape = RoundedCornerShape(DIALOG_CORNER_RADIUS.dp),
+            shape = RoundedCornerShape(cornerRadiusLarge),
             color = MaterialTheme.colorScheme.surfaceVariant,
             tonalElevation = 0.dp
         ) {
             Column(
-                modifier = Modifier.padding(DIALOG_PADDING.dp)
-                    .defaultMinSize(minHeight = DIALOG_MIN_HEIGHT.dp)
+                modifier = Modifier.padding(spacingLarge)
+                    .defaultMinSize(minHeight = dialogMinHeight)
                     .animateContentSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -81,39 +70,39 @@ fun CameraGalleryDialog(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
 
-                    Spacer(modifier = Modifier.height(DIALOG_PADDING.dp))
+                    Spacer(modifier = Modifier.height(spacingLarge))
 
                     Button(
                         onClick = {
                             onCameraClick()
                         },
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(DIALOG_CORNER_RADIUS.dp),
-                        contentPadding = PaddingValues(BUTTON_CONTENT_PADDING_VERTICAL.dp),
+                        shape = RoundedCornerShape(cornerRadiusLarge),
+                        contentPadding = PaddingValues(spacingSmallRegular),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.surface,
                             contentColor = MaterialTheme.colorScheme.onPrimary
                         )
                     ) {
-                        Spacer(Modifier.width(BUTTON_CONTENT_PADDING_HORIZONTAL.dp))
+                        Spacer(Modifier.width(spacingSmall))
                         Text(stringResource(R.string.onboarding_camera_button))
                     }
 
-                    Spacer(modifier = Modifier.height(BUTTON_CONTENT_PADDING_VERTICAL.dp))
+                    Spacer(modifier = Modifier.height(spacingSmallRegular))
 
                     Button(
                         onClick = {
                             onGalleryClick()
                         },
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(DIALOG_CORNER_RADIUS.dp),
-                        contentPadding = PaddingValues(BUTTON_CONTENT_PADDING_VERTICAL.dp),
+                        shape = RoundedCornerShape(cornerRadiusLarge),
+                        contentPadding = PaddingValues(spacingSmallRegular),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.surface,
                             contentColor = MaterialTheme.colorScheme.onPrimary
                         )
                     ) {
-                        Spacer(Modifier.width(BUTTON_CONTENT_PADDING_HORIZONTAL.dp))
+                        Spacer(Modifier.width(spacingSmallRegular))
                         Text(stringResource(R.string.onboarding_gallery_button))
                     }
                 }

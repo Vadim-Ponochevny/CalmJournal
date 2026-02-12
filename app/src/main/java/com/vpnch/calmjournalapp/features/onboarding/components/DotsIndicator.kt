@@ -15,14 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
-import com.vpnch.calmjournalapp.features.onboarding.components.DotsIndicatorDimens.DOT_SIZE
-import com.vpnch.calmjournalapp.features.onboarding.components.DotsIndicatorDimens.DOT_SPACING
-
-private object DotsIndicatorDimens {
-    const val DOT_SIZE = 7
-    const val DOT_SPACING = 4
-}
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.dotSize
+import com.vpnch.calmjournalapp.core.designsystem.Dimens.spacingTiny
 
 @Composable
 fun DotsIndicator(
@@ -40,7 +34,7 @@ fun DotsIndicator(
 
             Box(
                 modifier = Modifier
-                    .size(DOT_SIZE.dp)
+                    .size(dotSize)
                     .clip(CircleShape)
                     .background(
                         color = if (isSelected)
@@ -51,7 +45,7 @@ fun DotsIndicator(
             )
 
             Spacer(
-                modifier = Modifier.width(DOT_SPACING.dp)
+                modifier = Modifier.width(spacingTiny)
             )
         }
     }
