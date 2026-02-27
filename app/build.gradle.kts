@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlinx.serialization.json)
 }
 
 android {
@@ -52,6 +53,11 @@ android {
 }
 
 dependencies {
+    // json
+    implementation(libs.kotlinx.serialization.json)
+    // Room
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
