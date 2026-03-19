@@ -60,7 +60,6 @@ class OnboardingViewModel @Inject constructor(
                         avatarState = state.avatarState.copy(
                             selectedType = AvatarType.DEFAULT_AVATAR,
                             resId = event.resId,
-                            uri = null
                         )
                     )
                 }
