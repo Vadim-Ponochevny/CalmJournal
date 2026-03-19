@@ -2,8 +2,8 @@ package com.vpnch.calmjournalapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.vpnch.calmjournalapp.data.journalDatabase.JournalDatabase
-import com.vpnch.calmjournalapp.data.journalDatabase.MIGRATION_1_2
+import com.vpnch.calmjournalapp.data.journal.JournalDatabase
+import com.vpnch.calmjournalapp.data.journal.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

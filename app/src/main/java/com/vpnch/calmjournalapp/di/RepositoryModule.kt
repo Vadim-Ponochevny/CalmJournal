@@ -1,14 +1,14 @@
 package com.vpnch.calmjournalapp.di
 
-import com.vpnch.calmjournalapp.data.gigachat.local.GigaChatPreferences
-import com.vpnch.calmjournalapp.data.gigachat.network.GigaChatApi
-import com.vpnch.calmjournalapp.data.gigachat.network.GigaOAuthApi
-import com.vpnch.calmjournalapp.data.gigachat.repository.JournalInsightRepositoryImpl
-import com.vpnch.calmjournalapp.data.journalDatabase.JournalDao
-import com.vpnch.calmjournalapp.data.journalDatabase.JournalDatabase
-import com.vpnch.calmjournalapp.data.journalDatabase.repository.JournalRepositoryImpl
-import com.vpnch.calmjournalapp.domain.repository.JournalInsightRepository
-import com.vpnch.calmjournalapp.domain.repository.JournalRepository
+import com.vpnch.calmjournalapp.data.insightentry.gigachat.local.GigaChatPreferences
+import com.vpnch.calmjournalapp.data.insightentry.gigachat.network.GigaChatApi
+import com.vpnch.calmjournalapp.data.insightentry.gigachat.network.GigaOAuthApi
+import com.vpnch.calmjournalapp.data.insightentry.gigachat.repository.JournalInsightRepositoryImpl
+import com.vpnch.calmjournalapp.data.journal.JournalDao
+import com.vpnch.calmjournalapp.data.journal.JournalDatabase
+import com.vpnch.calmjournalapp.data.journal.repository.JournalRepositoryImpl
+import com.vpnch.calmjournalapp.domain.insightentry.repository.JournalInsightRepository
+import com.vpnch.calmjournalapp.domain.journal.repository.JournalRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

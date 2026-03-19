@@ -42,7 +42,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.vpnch.calmjournalapp.R
-import com.vpnch.calmjournalapp.domain.models.JournalBlock
+import com.vpnch.calmjournalapp.domain.journal.model.JournalBlock
 
 @Composable
 fun JournalScreen(

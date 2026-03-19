@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import com.vpnch.calmjournalapp.R
 import com.vpnch.calmjournalapp.presentation.designsystem.Dimens.TOTAL_PAGES
 import com.vpnch.calmjournalapp.presentation.designsystem.Dimens.fieldMaxWidth
@@ -34,12 +35,14 @@ import com.vpnch.calmjournalapp.presentation.onboarding.pages.WelcomeAnimationPa
 import com.vpnch.calmjournalapp.presentation.designsystem.Dimens.spacingLarge
 import com.vpnch.calmjournalapp.presentation.designsystem.Dimens.spacingMedium
 import com.vpnch.calmjournalapp.presentation.designsystem.Dimens.spacingTiny
+import com.vpnch.calmjournalapp.presentation.navigation.Route
 
 @Composable
 fun OnboardingScreen(
     event: (OnBoardingEvent) -> Unit,
     modifier: Modifier = Modifier,
     state: OnboardingState,
+    navController: NavController,
 ) {
     val nameState = rememberTextFieldState(state.name)
 
@@ -66,11 +69,21 @@ fun OnboardingScreen(
         else -> true
     }
 
+    val navigateToMain = {
+        navController.navigate(Route.MainNavigation.route) {
+            popUpTo(Route.AppStartNavigation.route) { inclusive = true }
+            launchSingleTop = true
+        }
+    }
+
     val navigateNext = {
         if (isCurrentPageValid) {
             val isLastPage = state.currentPage == TOTAL_PAGES - 1
+
             if (isLastPage) {
-                event(OnBoardingEvent.SubmitFinalData(nameState.text.toString()))
+                event(OnBoardingEvent.SubmitFinalData(
+                    nameState.text.toString(), onSuccess = navigateToMain
+                ))
             } else {
                 event(OnBoardingEvent.NavigateNext)
             }

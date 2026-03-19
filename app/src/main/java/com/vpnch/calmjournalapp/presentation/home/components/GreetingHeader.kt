@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.vpnch.calmjournalapp.domain.models.User
+import com.vpnch.calmjournalapp.domain.user.model.User
 import com.vpnch.calmjournalapp.presentation.home.utils.AvatarModel
 import com.vpnch.calmjournalapp.presentation.home.utils.parseAvatarData
 

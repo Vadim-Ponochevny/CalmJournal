@@ -3,8 +3,8 @@ package com.vpnch.calmjournalapp.presentation.onboarding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vpnch.calmjournalapp.presentation.designsystem.Dimens.TOTAL_PAGES
-import com.vpnch.calmjournalapp.domain.models.User
-import com.vpnch.calmjournalapp.domain.usecases.onboarding.SaveOnboardingDataUseCase
+import com.vpnch.calmjournalapp.domain.user.model.User
+import com.vpnch.calmjournalapp.domain.user.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
-    private val saveOnboardingDataUseCase: SaveOnboardingDataUseCase
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(OnboardingState())
@@ -39,7 +39,7 @@ class OnboardingViewModel @Inject constructor(
             }
 
             is OnBoardingEvent.SubmitFinalData -> {
-                saveOnboardingData(event.name)
+                saveOnboardingData(event.name,event.onSuccess)
             }
 
             is OnBoardingEvent.OnCustomAvatarSelected -> {
@@ -68,7 +68,7 @@ class OnboardingViewModel @Inject constructor(
         }
     }
 
-    private fun saveOnboardingData(name: String) {
+    private fun saveOnboardingData(name: String, onSuccess: () -> Unit) {
         val avatarState = _state.value.avatarState
 
         val avatarData = when (avatarState.selectedType) {
@@ -85,7 +85,11 @@ class OnboardingViewModel @Inject constructor(
                     name = name,
                     avatarData = avatarData
                 )
-                saveOnboardingDataUseCase(newUser)
+
+                userRepository.saveUserData(newUser)
+
+                onSuccess()
+
             } catch (t: Throwable) {
                 _state.update { it.copy(errorMessage = t.message) }
             } finally {

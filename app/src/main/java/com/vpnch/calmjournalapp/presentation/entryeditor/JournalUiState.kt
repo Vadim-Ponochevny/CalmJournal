@@ -1,6 +1,6 @@
 package com.vpnch.calmjournalapp.presentation.entryeditor
 
-import com.vpnch.calmjournalapp.domain.models.JournalEntry
+import com.vpnch.calmjournalapp.domain.journal.model.JournalEntry
 
 data class JournalUiState(
 //    val entryId: Long = 0L,

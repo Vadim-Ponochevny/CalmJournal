@@ -6,9 +6,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import com.vpnch.calmjournalapp.domain.models.User
-import com.vpnch.calmjournalapp.domain.repository.JournalRepository
-import com.vpnch.calmjournalapp.domain.repository.LocalUserPreferences
+import com.vpnch.calmjournalapp.domain.user.model.User
+import com.vpnch.calmjournalapp.domain.journal.repository.JournalRepository
+import com.vpnch.calmjournalapp.domain.user.repository.UserRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val userPreferences: LocalUserPreferences,
+    private val userPreferences: UserRepository,
     private val journalRepository: JournalRepository
 ) : ViewModel() {
 

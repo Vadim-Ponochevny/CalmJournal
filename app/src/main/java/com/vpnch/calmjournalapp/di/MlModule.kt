@@ -1,10 +1,10 @@
 package com.vpnch.calmjournalapp.di
 
 import android.content.Context
-import com.vpnch.calmjournalapp.data.ml.emotion.analyzer.EmotionAnalyzer
-import com.vpnch.calmjournalapp.data.ml.emotion.analyzer.OnnxEmotionAnalyzer
-import com.vpnch.calmjournalapp.data.ml.emotion.loader.ModelLoader
-import com.vpnch.calmjournalapp.data.ml.emotion.tokenizer.BertTokenizer
+import com.vpnch.calmjournalapp.data.emotions.ml.analyzer.EmotionAnalyzer
+import com.vpnch.calmjournalapp.data.emotions.ml.analyzer.OnnxEmotionAnalyzer
+import com.vpnch.calmjournalapp.data.emotions.ml.loader.ModelLoader
+import com.vpnch.calmjournalapp.data.emotions.ml.tokenizer.BertTokenizer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

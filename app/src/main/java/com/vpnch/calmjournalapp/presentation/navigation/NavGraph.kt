@@ -33,7 +33,8 @@ fun NavGraph(startDestination: String) {
                 val state by viewModel.state.collectAsStateWithLifecycle()
                 OnboardingScreen(
                     state = state,
-                    event = viewModel::onEvent
+                    event = viewModel::onEvent,
+                    navController = navController
                 )
             }
         }

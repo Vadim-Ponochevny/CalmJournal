@@ -1,9 +1,9 @@
 package com.vpnch.calmjournalapp.di
 
 import android.app.Application
-import com.vpnch.calmjournalapp.data.gigachat.local.GigaChatPreferences
-import com.vpnch.calmjournalapp.data.user.local.LocalUserPreferencesImpl
-import com.vpnch.calmjournalapp.domain.repository.LocalUserPreferences
+import com.vpnch.calmjournalapp.data.insightentry.gigachat.local.GigaChatPreferences
+import com.vpnch.calmjournalapp.data.user.local.UserRepositoryImpl
+import com.vpnch.calmjournalapp.domain.user.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +18,7 @@ object ManagerModule {
     @Singleton
     fun provideLocalUserManager(
         application: Application
-    ): LocalUserPreferences = LocalUserPreferencesImpl(application)
+    ): UserRepository = UserRepositoryImpl(application)
 
     @Provides
     @Singleton
